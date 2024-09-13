@@ -1,0 +1,51 @@
+server:
+  port: 8083
+  
+spring:
+  application:
+          name: API-GATEWAY1
+    
+ 
+  cloud:
+    gateway:
+      routes:
+      - id: STUDENT-SERVICE
+        uri:
+          lb://STUDENT-SERVICE
+        predicates:
+        - Path=/api/v1/students/**
+        
+      - id: COURSE-SERVICE
+        uri:
+          lb://COURSE-SERVICE
+        predicates:
+        - Path=/api/v1/courses/**
+
+       
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders:
+              - content-type
+            allowedMethods: 
+              -GET
+              -POST
+              -PUT
+              -DELETE
+
+
+        
+        
+
+   
+        
+    
+        
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka
+      
+  instance:
+       prefer-ip-address: true
